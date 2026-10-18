@@ -1,5 +1,13 @@
 # Soul Core Hierarchy
 
+[![CI](https://github.com/Rukko/shadow-slave-hierarchy/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Rukko/shadow-slave-hierarchy/actions/workflows/ci.yml)
+[![Deploy](https://github.com/Rukko/shadow-slave-hierarchy/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/Rukko/shadow-slave-hierarchy/actions/workflows/deploy.yml)
+[![Version](https://img.shields.io/github/package-json/v/Rukko/shadow-slave-hierarchy)](https://github.com/Rukko/shadow-slave-hierarchy/tags)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fshadow-slave-hierarchy.pages.dev&label=site)](https://shadow-slave-hierarchy.pages.dev)
+[![Preact](https://img.shields.io/github/package-json/dependency-version/Rukko/shadow-slave-hierarchy/preact?logo=preact)](https://preactjs.com)
+[![Vite](https://img.shields.io/github/package-json/dependency-version/Rukko/shadow-slave-hierarchy/dev/vite?logo=vite)](https://vite.dev)
+[![TypeScript](https://img.shields.io/github/package-json/dependency-version/Rukko/shadow-slave-hierarchy/dev/typescript?logo=typescript)](https://www.typescriptlang.org)
+
 An interactive guide to the soul core hierarchy of _Shadow Slave_: seven ranks walked in two directions, the path of corruption for Nightmare Creatures and the path of ascension for Awakened humans, with classes counted by soul cores.
 
 The page includes:
