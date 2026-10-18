@@ -3,6 +3,8 @@ name: Deploy to Cloudflare Pages
 # master goes to production, every other branch to a preview at <branch>.shadow-slave-hierarchy.pages.dev.
 on:
   push:
+    # Branches only: a pushed tag is not a site to publish.
+    branches: ['**']
   workflow_dispatch:
 
 permissions:
@@ -21,8 +23,9 @@ jobs:
       url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v7
-      # Reads the pnpm version from the packageManager field in package.json.
-      - uses: pnpm/action-setup@v6
+      # Reads the pnpm version from the packageManager field in package.json. Third-party code that
+      # shares a runner with the Cloudflare token, so it is pinned to a commit.
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
