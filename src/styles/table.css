@@ -1,0 +1,317 @@
+/* ---------- unified table ---------- */
+.hierarchy-table {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.hierarchy-table__table {
+  width: 100%;
+  min-width: 1060px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+/* :where keeps this at single-class specificity, so the header and row classes below can refine it. */
+.hierarchy-table__table :where(th, td) {
+  padding: 0 16px;
+  text-align: left;
+}
+/* Thin vertical rule between the rank columns and the class columns. */
+.hierarchy-table__table .hierarchy-table__divider {
+  width: 2px;
+  min-width: 2px;
+  padding: 0;
+  background: var(--line);
+  border: 0;
+}
+
+.hierarchy-table__group {
+  padding-top: 20px;
+  padding-bottom: 14px;
+  font-weight: 400;
+  vertical-align: bottom;
+}
+.hierarchy-table__group--rank {
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(90deg, var(--corrupt), var(--ascend)) 1;
+}
+.hierarchy-table__group--class {
+  border-bottom: 3px solid var(--core);
+}
+.hierarchy-table__group-title {
+  display: block;
+  font: 900 36px/1 var(--f-display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.hierarchy-table__group-sub {
+  display: block;
+  margin-top: 7px;
+  font: 500 11px/1.45 var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hierarchy-table__col {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-weight: 500;
+  vertical-align: bottom;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+}
+.hierarchy-table__col-kicker {
+  display: block;
+  font: 500 11px/1.2 var(--f-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hierarchy-table__col-title {
+  display: block;
+  margin-top: 3px;
+  font: 800 20px/1 var(--f-display);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.hierarchy-table__col-title--creature {
+  color: var(--corrupt-text);
+}
+.hierarchy-table__col-title--human {
+  color: var(--ascend-text);
+}
+.hierarchy-table__col-title--class {
+  color: var(--core-text);
+}
+
+/* --t is the row's position from the lowest rank (0) to the highest (1). It drives the tints.
+   --r is the row index, used to stagger the entrance. */
+.hierarchy-table__row:nth-child(1) {
+  --t: 0;
+  --r: 0;
+}
+.hierarchy-table__row:nth-child(2) {
+  --t: 0.1667;
+  --r: 1;
+}
+.hierarchy-table__row:nth-child(3) {
+  --t: 0.3333;
+  --r: 2;
+}
+.hierarchy-table__row:nth-child(4) {
+  --t: 0.5;
+  --r: 3;
+}
+.hierarchy-table__row:nth-child(5) {
+  --t: 0.6667;
+  --r: 4;
+}
+.hierarchy-table__row:nth-child(6) {
+  --t: 0.8333;
+  --r: 5;
+}
+.hierarchy-table__row:nth-child(7) {
+  --t: 1;
+  --r: 6;
+}
+.hierarchy-table__row td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--line);
+}
+.hierarchy-table__row:last-child td,
+.hierarchy-table__row .hierarchy-table__divider {
+  border-bottom: 0;
+}
+.hierarchy-table__rank-cell {
+  width: 19%;
+}
+.hierarchy-table__rank-cell--creature,
+.hierarchy-table__compact-cell--creature {
+  background: color-mix(in srgb, var(--corrupt) calc(3% + var(--t) * 14%), var(--surface));
+}
+.hierarchy-table__rank-cell--human,
+.hierarchy-table__compact-cell--human {
+  background: color-mix(in srgb, var(--ascend) calc(3% + var(--t) * 14%), var(--surface));
+}
+.hierarchy-table__class-cell,
+.hierarchy-table__compact-cell--class {
+  background: color-mix(in srgb, var(--core) calc(2% + var(--t) * 12%), var(--surface));
+}
+
+.hierarchy-table__rank {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hierarchy-table__rank-num {
+  flex: none;
+  width: 28px;
+  text-align: center;
+  font: 900 36px/1 var(--f-display);
+  font-variant-numeric: tabular-nums;
+}
+.hierarchy-table__rank-num--creature {
+  color: color-mix(in srgb, var(--corrupt-text) calc(40% + var(--t) * 60%), var(--muted));
+}
+.hierarchy-table__rank-num--human {
+  color: color-mix(in srgb, var(--ascend-text) calc(40% + var(--t) * 60%), var(--muted));
+}
+.hierarchy-table__rank-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.hierarchy-table__rank-name {
+  font: 800 21px/1 var(--f-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.hierarchy-table__rank-note {
+  margin-top: 5px;
+  font: 400 10px/1 var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hierarchy-table__name-title {
+  display: block;
+  font: 800 21px/1 var(--f-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.hierarchy-table__name-title--human {
+  color: var(--ascend-text);
+}
+.hierarchy-table__name-title--class {
+  color: var(--core-text);
+}
+.hierarchy-table__name-desc {
+  display: block;
+  margin-top: 5px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.hierarchy-table__cores {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hierarchy-table__cores-count {
+  flex: none;
+  width: 22px;
+  text-align: center;
+  font: 900 30px/1 var(--f-display);
+  color: var(--core-text);
+  font-variant-numeric: tabular-nums;
+}
+.hierarchy-table__core-dots {
+  display: inline-flex;
+  gap: 5px;
+}
+.hierarchy-table__core-dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--core) 45%, transparent);
+}
+.hierarchy-table__core-dot--on {
+  background: var(--core);
+  border-color: var(--core);
+}
+
+/* ---------- compact layout: narrow screens, every rank at a glance ---------- */
+.hierarchy-table__toolbar {
+  display: flex;
+  margin-bottom: 12px;
+}
+.hierarchy-table__table--compact {
+  min-width: 0;
+}
+.hierarchy-table__table--compact :where(th, td) {
+  padding: 10px 8px;
+}
+.hierarchy-table__table--compact .hierarchy-table__col {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.hierarchy-table__col--num {
+  width: 1%;
+  text-align: center;
+}
+.hierarchy-table__table--compact .hierarchy-table__col-title {
+  font-size: 17px;
+}
+.hierarchy-table__table--compact .hierarchy-table__row td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.hierarchy-table__compact-num {
+  text-align: center;
+  font: 900 26px/1 var(--f-display);
+  color: color-mix(in srgb, var(--fg) calc(35% + var(--t) * 65%), var(--muted));
+  border-bottom: 1px solid var(--line);
+}
+.hierarchy-table__row:last-child .hierarchy-table__compact-num {
+  border-bottom: 0;
+}
+.hierarchy-table__compact-name {
+  display: block;
+  font: 800 17px/1.05 var(--f-display);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.hierarchy-table__compact-name--class {
+  color: var(--core-text);
+}
+.hierarchy-table__compact-sub {
+  display: block;
+  margin-top: 4px;
+  font: 500 10px/1 var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ascend-text);
+}
+.hierarchy-table__core-dots--small {
+  gap: 3px;
+  margin-top: 6px;
+}
+.hierarchy-table__core-dots--small .hierarchy-table__core-dot {
+  width: 7px;
+  height: 7px;
+  border-width: 1px;
+}
+/* The smallest phones (320px) need tighter cells to keep the class column whole. */
+@media (max-width: 359px) {
+  .hierarchy-table__table--compact :where(th, td) {
+    padding-inline: 5px;
+  }
+  .hierarchy-table__table--compact .hierarchy-table__col-title,
+  .hierarchy-table__compact-name {
+    font-size: 15px;
+  }
+  .hierarchy-table__compact-num {
+    font-size: 22px;
+  }
+  .hierarchy-table__core-dots--small {
+    gap: 2px;
+  }
+  .hierarchy-table__core-dots--small .hierarchy-table__core-dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+.footnote {
+  max-width: 80ch;
+  margin: 14px 2px 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}

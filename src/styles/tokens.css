@@ -1,0 +1,75 @@
+/* Design tokens. Dark is the default theme, light applies through data-theme or the OS preference. */
+/* Concept: seven ranks walked in two directions. Crimson is the path of corruption, teal the path of ascension,
+   amber the cores themselves. Dark-first: the page is the Dream Realm at night. */
+:root {
+  --bg: #0c0d10;
+  --surface: #14161b;
+  --surface-2: #1c1f26;
+  --line: #2b2f39;
+  --fg: #eceef2;
+  --muted: #a0a6b3;
+  --corrupt: #e0416b;
+  --corrupt-text: #ff7d9c;
+  --ascend: #3fc9d6;
+  --ascend-text: #7fe3ec;
+  --core: #e3a93f;
+  --core-text: #f1c870;
+  --on-heat: #ffffff;
+  --on-ascend: #06121a;
+  --on-core: #14161b;
+  --corona: #ffe4b0;
+  --cap-c: 74%;
+  --cap-a: 43%;
+  --f-display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
+  --f-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-ui: 240ms;
+  --t-reveal: 800ms;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --bg: #eef0f3;
+    --surface: #fafbfc;
+    --surface-2: #e3e6eb;
+    --line: #cdd2db;
+    --fg: #14161b;
+    --muted: #545b69;
+    --corrupt: #c4244f;
+    --corrupt-text: #a81c42;
+    --ascend: #0c8a9a;
+    --ascend-text: #0a6f7d;
+    --core: #b57a0b;
+    --core-text: #8a5906;
+    --on-heat: #ffffff;
+    --on-ascend: #ffffff;
+    --cap-c: 54%;
+    --cap-a: 54%;
+    --corona: #9a6608;
+    color-scheme: light;
+  }
+}
+:root[data-theme='light'] {
+  --bg: #eef0f3;
+  --surface: #fafbfc;
+  --surface-2: #e3e6eb;
+  --line: #cdd2db;
+  --fg: #14161b;
+  --muted: #545b69;
+  --corrupt: #c4244f;
+  --corrupt-text: #a81c42;
+  --ascend: #0c8a9a;
+  --ascend-text: #0a6f7d;
+  --core: #b57a0b;
+  --core-text: #8a5906;
+  --on-heat: #ffffff;
+  --on-ascend: #ffffff;
+  --cap-c: 54%;
+  --cap-a: 54%;
+  --corona: #9a6608;
+  color-scheme: light;
+}

@@ -1,0 +1,186 @@
+/* ---------- power maps ---------- */
+.heatmap {
+  display: grid;
+  grid-template-columns: minmax(110px, 170px) repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  min-width: 640px;
+}
+
+/* Row heads: one per rank, on the left. */
+.heatmap__row-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 10px 0 8px;
+  min-width: 0;
+  border-radius: 3px;
+  transition: background-color var(--t-hover) ease;
+}
+.heatmap__row-head--top {
+  box-shadow: inset 3px 0 0 var(--core);
+  padding-left: 12px;
+}
+.heatmap__row-name {
+  font: 800 19px/1 var(--f-display);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.heatmap__row-name--creature {
+  color: var(--corrupt-text);
+}
+.heatmap__row-name--human {
+  color: var(--ascend-text);
+}
+.heatmap__row-points {
+  font: 400 10px/1 var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Column heads: one per class, along the bottom. */
+.heatmap__col-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 2px 6px;
+  min-width: 0;
+  border-radius: 3px;
+  transition: background-color var(--t-hover) ease;
+}
+.heatmap__col-head--top {
+  box-shadow: inset 0 3px 0 var(--core);
+}
+.heatmap__col-num {
+  font: 800 19px/1 var(--f-display);
+}
+.heatmap__col-name {
+  font: 400 9px/1 var(--f-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.heatmap__col-points {
+  font: 500 10px/1 var(--f-mono);
+  font-style: normal;
+  color: var(--core-text);
+}
+
+/* Heads of the hovered or focused cell. */
+.heatmap__row-head.is-active,
+.heatmap__col-head.is-active {
+  background: var(--surface-2);
+}
+
+.heatmap__corner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 10px 6px 8px;
+  font: 500 10px/1.2 var(--f-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* --t is the cell's power on a 0..1 log scale, --d its diagonal for the entrance stagger. */
+.heatmap__cell {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 46px;
+  border-radius: 3px;
+  color: var(--fg);
+  cursor: pointer;
+  font: 800 16px/1 var(--f-display);
+  font-variant-numeric: tabular-nums;
+  transition:
+    transform var(--t-press) var(--ease-out),
+    box-shadow var(--t-hover) ease;
+}
+.heatmap__cell--creature {
+  background: color-mix(
+    in srgb,
+    var(--corrupt) calc(6% + var(--t) * var(--cap-c)),
+    var(--surface-2)
+  );
+}
+.heatmap__cell--human {
+  background: color-mix(
+    in srgb,
+    var(--ascend) calc(6% + var(--t) * var(--cap-a)),
+    var(--surface-2)
+  );
+}
+.heatmap__cell:active {
+  transform: scale(0.94);
+}
+@media (hover: hover) and (pointer: fine) {
+  .heatmap__cell:hover {
+    box-shadow: inset 0 0 0 2px var(--fg);
+  }
+}
+.heatmap__cell-value--short {
+  display: none;
+}
+/* A cell picked for a battle shows its fighter letter, A or B. */
+.heatmap__cell[data-pick] {
+  box-shadow: inset 0 0 0 3px var(--fg);
+}
+.heatmap__cell[data-pick]::before {
+  content: attr(data-pick);
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font: 700 11px/1 var(--f-body);
+  color: var(--fg);
+}
+
+/* Status line under each map that reports the picked cells. */
+.battle-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  min-height: 42px;
+  margin: 12px 0 0;
+  font-size: 14px;
+}
+.battle-bar__link {
+  color: var(--fg);
+  text-underline-offset: 0.2em;
+}
+
+@media (max-width: 640px) {
+  .heatmap {
+    min-width: 0;
+    grid-template-columns: minmax(64px, 92px) repeat(7, minmax(0, 1fr));
+  }
+  .heatmap__cell-value--full {
+    display: none;
+  }
+  .heatmap__cell-value--short {
+    display: inline;
+  }
+  .heatmap__cell {
+    height: 40px;
+    font-size: 14px;
+  }
+  .heatmap__col-name,
+  .heatmap__row-points {
+    display: none;
+  }
+  .heatmap__row-name {
+    font-size: 15px;
+  }
+}

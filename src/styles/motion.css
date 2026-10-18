@@ -1,0 +1,122 @@
+/* ---------- motion (content is complete at rest; these only play) ---------- */
+/* --i orders the entrances inside a group. The hero sets it here, src/hooks/useEntrance.ts sets it on [data-anim]. */
+.hero__title-line:nth-child(2) .hero__title-text,
+.legend {
+  --i: 1;
+}
+.soul-sea {
+  --i: 3;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero__title-text {
+    animation: lineUp 900ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 110ms + 150ms);
+  }
+  .hero__title-line {
+    animation: unclip 1ms linear 1400ms forwards;
+  }
+  .hero__sun {
+    animation:
+      ignite 1100ms var(--ease-out) both 650ms,
+      corona 4.8s ease-in-out 1.8s infinite alternate;
+  }
+  .hero__lede,
+  .legend,
+  .soul-sea {
+    animation: rise var(--t-reveal) var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 420ms);
+  }
+  .is-playing [data-anim] {
+    animation: rise 700ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 80ms);
+  }
+  .is-playing .hierarchy-table__row {
+    animation: rowIn 600ms var(--ease-out) both;
+    animation-delay: calc(var(--r, 0) * 70ms + 200ms);
+  }
+  .heatmap.is-playing .heatmap__cell {
+    animation: cellIn 650ms var(--ease-out) both;
+    animation-delay: calc(var(--d) * 45ms + 100ms);
+  }
+  .verdict__ratio--bump {
+    animation: bump 420ms var(--ease-out);
+  }
+}
+@keyframes unclip {
+  to {
+    clip-path: inset(-60vh -100vw -60vh -100vw);
+  }
+}
+@keyframes ignite {
+  from {
+    transform: scale(0.15);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes corona {
+  from {
+    box-shadow:
+      0 0 0 0.022em var(--corona),
+      0 0 0.22em 0.02em color-mix(in srgb, var(--corona) 26%, transparent);
+  }
+  to {
+    box-shadow:
+      0 0 0 0.022em var(--corona),
+      0 0 0.42em 0.08em color-mix(in srgb, var(--corona) 42%, transparent);
+  }
+}
+@keyframes lineUp {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes rowIn {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes cellIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes bump {
+  from {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,43 @@
+name: Deploy to Cloudflare Pages
+
+# master goes to production, every other branch to a preview at <branch>.shadow-slave-hierarchy.pages.dev.
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment per branch at a time, without cancelling one already in progress.
+concurrency:
+  group: pages-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.ref_name == 'master' && 'production' || 'preview' }}
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v7
+      # Reads the pnpm version from the packageManager field in package.json.
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      # The cf CLI cannot upload to Pages yet, so Wrangler does it. It runs here only, pinned,
+      # and is not a project dependency. The token can only edit Cloudflare Pages.
+      - id: deploy
+        run: |
+          pnpm dlx wrangler@4.147.0 pages deploy dist \
+            --project-name=shadow-slave-hierarchy \
+            --branch="$GITHUB_REF_NAME" \
+            --commit-hash="$GITHUB_SHA" | tee deploy.log
+          echo "url=$(grep -oE 'https://[a-z0-9.-]+\.pages\.dev' deploy.log | tail -n 1)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
